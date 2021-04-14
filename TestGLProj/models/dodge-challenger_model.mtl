@@ -1,0 +1,292 @@
+# Blender MTL File: 'dodge-challenger_model.blend'
+# Material Count: 25
+newmtl Black_glass_glasses_lines.png
+Ns 894.388700
+Ka 0.000000 0.000000 0.000000
+Kd 0.003766 0.003766 0.003766
+Ks 0.169930 0.169930 0.169930
+Ni 1.000000
+d 0.500000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\glasses_lines.png
+
+
+newmtl CarPaint_col_body.png
+Ns 358.823529
+Ka 0.000000 0.000000 0.000000
+Kd 0.887923 0.830770 0.034340
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\col_body.png
+
+
+newmtl blinkers_blinkers.png
+Ns 13.725490
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\blinkers_SMALL.png
+
+
+newmtl body_mat_col_body.png
+Ns 29.411765
+Ka 0.000000 0.000000 0.000000
+Kd 0.004187 0.004187 0.004187
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\col_body.png
+
+
+newmtl brake_disk_ao_brake_disk
+Ns 437.500015
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.600000 0.600000 0.600000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\ao_brake_disk.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_brake_disk_SMALL.png
+
+
+newmtl brake_disk_diff_brake_disk.png
+Ns 437.500015
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.600000 0.600000 0.600000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_brake_disk_SMALL.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_brake_disk_SMALL.png
+
+
+newmtl chassis_diff_chassis.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.160000 0.160000 0.160000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_chassis.png
+
+
+newmtl chrome_col_body.png
+Ns 570.588235
+Ka 0.000000 0.000000 0.000000
+Kd 0.448000 0.448000 0.461440
+Ks 0.469500 0.469500 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\col_body.png
+
+
+newmtl chrome_roller_diff_roller.png
+Ns 570.588235
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.824000
+Ks 0.939000 0.939000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_roller.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_roller.png
+
+
+newmtl chrome_window
+Ns 570.588235
+Ka 0.000000 0.000000 0.000000
+Kd 0.009981 0.009981 0.010280
+Ks 0.469500 0.469500 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\refl_sky_EXTRASMALL.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_window.png
+
+
+newmtl chrome_window_nor_window.png
+Ns 570.588235
+Ka 0.000000 0.000000 0.000000
+Kd 0.009981 0.009981 0.010280
+Ks 0.469500 0.469500 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\nor_window.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_window.png
+
+
+newmtl essence_cap
+Ns -0.000015
+Ka 0.000000 0.000000 0.000000
+Kd 0.183859 0.183859 0.189375
+Ks 0.450720 0.450720 0.480000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\refl_sky_EXTRASMALL.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_cap.png
+
+
+newmtl exhaust_diff_exhaust.png
+Ns 76.470588
+Ka 0.000000 0.000000 0.000000
+Kd 0.008768 0.008768 0.008768
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_exhaust.png
+
+
+newmtl glass_mat
+Ns 56.862745
+Ka 0.000000 0.000000 0.000000
+Kd 0.000090 0.000090 0.000090
+Ks 0.025000 0.025000 0.025000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\refl_sky_SMALL.png
+
+
+newmtl glass_mat_glasses_lines.png
+Ns 56.862745
+Ka 0.000000 0.000000 0.000000
+Kd 0.000090 0.000090 0.000090
+Ks 0.025000 0.025000 0.025000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\glasses_lines.png
+
+
+newmtl interior
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.147843 0.097015 0.036710
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\diff_interior.png
+
+
+newmtl interior_diff_interior
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.147843 0.097015 0.036710
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_interior.png
+
+
+newmtl license_plate_diff_license_plate.pn
+Ns 675.000012
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_license_plate.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_license_plate.png
+
+
+newmtl logo1_nor_logo1
+Ns 570.588235
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.824000
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\nor_logo1.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_logo1.png
+
+
+newmtl logo2_diff_roller.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_roller.png
+map_d C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\challenger-logo.png
+
+
+newmtl logo3_diff_roller.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_roller.png
+map_d C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\logo-dodge.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_logo-dodge.png
+
+
+newmtl rear_light_diff_rearlight.png
+Ns 749.999996
+Ka 0.000000 0.000000 0.000000
+Kd 0.238490 0.000000 0.005838
+Ks 0.200000 0.200000 0.200000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_rearlight.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\wire_rearlight.png
+
+
+newmtl rim_nor_rim
+Ns 115.686275
+Ka 0.000000 0.000000 0.000000
+Kd 0.430175 0.430175 0.443080
+Ks 0.939000 0.939000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\nor_rim_SMALL.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_rim_SMALL.png
+
+
+newmtl roller_diff_roller.png
+Ns 56.862745
+Ka 0.000000 0.000000 0.000000
+Kd 0.006108 0.006108 0.006108
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_roller.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_roller.png
+
+
+newmtl tire_diff_tire.png
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.001810 0.001810 0.002185
+Ks 0.680000 0.680000 0.680000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\John\Dropbox\teaching\sp13\example code\other resources\models\dodge-challenger_model.blend\textures\diff_tire_SMALL.png
+map_Bump C:\\Users\\John\\Dropbox\\teaching\\sp13\\example code\\other resources\\models\\dodge-challenger_model.blend\\textures\\nor_tire_SMALL.png
+
+
