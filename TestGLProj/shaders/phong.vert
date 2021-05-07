@@ -1,4 +1,4 @@
-#version 440 core 
+#version 440 core
 out vec3 N;
 out vec3 L;
 out vec3 E;

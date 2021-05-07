@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
+#include <GL/glut.h>
 
 //glm library
 #include <glm/glm.hpp>
@@ -10,6 +11,8 @@
 
 #include "Model.h"
 #include "Shader.h"
+#include "Shader3.h"
+#include "Mesh.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -17,13 +20,17 @@
 #define M_PI 3.1415926535897932384626433832795
 
 Shader shader; // loads our vertex and fragment shaders
-Model *body; //a body 
+//Shader3 shaderSL; // loads our vertex and fragment shaders
+Model *car; //a car 
+Mesh *sphere; //a light??? 
+Model *cone; //a cone 
 Model *plane; //a plane
+Model *street; //a street
+Model *lamp; //a street
 //Model *lArm; //a left arm // TODO: Convert to Wheels
 //Model *rArm; //a right arm
 //Model *lLeg; //a left leg
 //Model *rLeg; //a right leg
-//Model *head; //a head
 glm::mat4 projection; // projection matrix
 glm::mat4 view; // where the camera is looking
 glm::mat4 model; // Main-Body Model
@@ -31,17 +38,20 @@ glm::mat4 model; // Main-Body Model
 //glm::mat4 modelRArm; //Right Arm swing model
 //glm::mat4 modelLLeg; //Left Leg swing model
 //glm::mat4 modelRLeg; //Right Leg swing model
-//glm::mat4 modelHead; //Head swivel model
 float angle = 0;
 float angle2 = 0;
-glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 position = glm::vec3(0.0f, 1.0f, 0.0f);
 glm::vec3 direction;
-int firstPerson = 1; //1 is first person, 0 is free-look
-glm::vec3 camPos = glm::vec3(0.0f, 0.0f, 20.0f);
+int cameraMode = 1; //1 is first person, 0 is free-look, 2 is top down, 3 is thrid person
+glm::vec3 camPos = glm::vec3(0.0f, 5.0f, -5.0f);
 glm::vec3 camDir = glm::vec3(0.0f, 0.0f, 0.0f);
 float camAngle;
 float camPitch = 0.0f;
 float speed = 0.0f;
+
+float rotation = 0.0f;
+glm::vec4 lightPosition = glm::vec4(0.0f, 3.0f, 0.0f, 1.0f);
+
 /* report GL errors, if any, to stderr */
 void checkError(const char *functionName)
 {
@@ -54,6 +64,7 @@ void checkError(const char *functionName)
 void initShader(void)
 {
 	shader.InitializeFromFile("shaders/phong.vert", "shaders/phong.frag");
+	//shaderSL.InitializeFromFile("shaders/phong.vert", "shaders/phong3.frag");
 	shader.AddAttribute("vertexPosition");
 	shader.AddAttribute("vertexNormal");
 
@@ -92,44 +103,59 @@ void dumpInfo(void)
 /*This gets called when the OpenGL is asked to display. This is where all the main rendering calls go*/
 void display(void)
 {
-
-	//glm::rot
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	// camera positioned at 20 on the z axis, looking into the screen down the -Z axis.
 	model = glm::translate(position) * glm::rotate(angle, 0.0f, 1.0f, 0.0f); //Body Model
 	direction = glm::normalize(glm::vec3(sin(angle * (M_PI / 180)), 0, cos(angle * (M_PI / 180))));
-	if (firstPerson == 0) {
+	if (cameraMode == 0) {
 		camDir = glm::normalize(glm::vec3(
 			cos(glm::radians(camAngle)) * cos(glm::radians(camPitch)),	//X
 			sin(glm::radians(camPitch)),								//Y
 			sin(glm::radians(camAngle)) * cos(glm::radians(camPitch))));//Z
 		view = glm::lookAt(camPos, camPos+camDir, glm::vec3(0.0f, 1.0f, 0.0f));
 	} 
-	else
-		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 0.0f), position+(-direction)+glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));//camera render location
-	/*
-	modelLArm = model * glm::translate(1.4f, 1.0f, 0.0f) * glm::rotate(45 * sin(angle2), 1.0f, 0.0f, 0.0f) * glm::translate(0.0f, -1.0f, 0.0f)* glm::scale(0.4f, 1.0f, 0.4f);
-	modelRArm = model * glm::translate(-1.4f, 1.0f, 0.0f) * glm::rotate(45 * sin(angle2), -1.0f, 0.0f, 0.0f) * glm::translate(0.0f, -1.0f, 0.0f) * glm::scale(0.4f, 1.0f, 0.4f);
-	modelLLeg = model * glm::translate(0.8f, -1.0f, 0.0f) * glm::rotate(45 * sin(angle2), -1.0f, 0.0f, 0.0f) * glm::translate(0.0f, -2.0f, 0.0f) * glm::scale(0.4f, 1.0f, 0.4f);
-	modelRLeg = model * glm::translate(-0.8f, -1.0f, 0.0f) * glm::rotate(45 * sin(angle2), 1.0f, 0.0f, 0.0f) * glm::translate(0.0f, -2.0f, 0.0f) * glm::scale(0.4f, 1.0f, 0.4f);
-	modelHead = model * glm::translate(0.0f, 2.5f, 0.0f) * glm::scale(0.5f, 0.5f, 0.5f);
-	*/
-	body->render(view *model * glm::scale(1.0f, 1.0f, 1.0f), projection); // Render current active model.
-	/*
-	// lArm is a child of the body
-	lArm->render(view *modelLArm, projection);
-	// rArm is a child of the body
-	rArm->render(view *modelRArm, projection);
-	// lLeg is a child of the body
-	lArm->render(view *modelLLeg, projection);
-	// rLeg is a child of the body
-	rArm->render(view *modelRLeg, projection);
-	// head is a child of the body, not rendered if first person
-	if (firstPerson == 0)
-		head->render(view * modelHead, projection);
-	*/
-	plane->render(view * glm::translate(0.0f,-5.0f,0.0f)*glm::scale(20.0f,1.0f,20.0f), projection);
+	else if(cameraMode == 1)
+		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 1.0f), position+(-direction)+glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));//camera render location
+	else if(cameraMode == 2)
+		view = glm::lookAt(position + glm::vec3(0.0f, 20.0f, 0.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	else if (cameraMode == 3)
+		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 5.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	car->render(view *model * glm::scale(1.0f, 1.0f, 1.0f) * glm::translate(0.0f,0.0f,1.0f), projection); // Render current active model.
+	//plane->render(view * glm::translate(0.0f,0.0f,-175.0f)*glm::scale(10.0f,1.0f,180.0f), projection);
+	for (int i = 0; i < 350; i += 20) {
+		street->render(view * glm::translate(-3.0f, 0.0f, 0.0f - i) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+	}
+	
+	for (int i = 0; i < 350; i += 20) {
+		lamp->render(view * glm::translate(5.0f, 0.0f, 0.0f - i) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+		lamp->render(view * glm::translate(-12.0f, 0.0f, 0.0f - i)* glm::rotate(180.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+	}
+	
 	position -= direction * speed;
+
+	//lightPosition = glm::rotate(0.1f, 0.0f, 0.0f, 1.0f) * lightPosition;
+	//shaderSL.Activate(); // Bind shader.
+	//shaderSL.SetUniform("lightPosition", view * lightPosition);
+	//shaderSL.SetUniform("lightDiffuse", glm::vec4(1.0, 1.0, 1.0, 1.0));
+	//shaderSL.SetUniform("lightSpecular", glm::vec4(1.0, 1.0, 1.0, 1.0));
+	//shaderSL.SetUniform("lightAmbient", glm::vec4(0.0, 0.0, 0.0, 1.0));
+
+	//shaderSL.SetUniform("surfaceDiffuse", glm::vec4(1.0, 0.0, 0.0, 1.0));
+	//shaderSL.SetUniform("surfaceSpecular", glm::vec4(1.0, 1.0, 1.0, 1.0));
+	//shaderSL.SetUniform("surfaceAmbient", glm::vec4(1.0, 0.0, 0.0, 1.0));
+	//shaderSL.SetUniform("shininess", 90.0f);
+	//shaderSL.SetUniform("surfaceEmissive", glm::vec4(0.0, 0.0, 0.0, 1.0));
+
+
+	//shaderSL.Activate();
+	////draw the light!
+	//shaderSL.SetUniform("surfaceEmissive", glm::vec4(1.0, 1.0, 1.0, 1.0));
+	//sphere->render(view * glm::translate(lightPosition.x, lightPosition.y, lightPosition.z) * glm::scale(.1f, .1f, .1f), projection);
+
+
+	//shaderSL.DeActivate(); // Unbind shader.
 	
 	glutSwapBuffers(); // Swap the buffers.
 	checkError ("display");
@@ -159,21 +185,15 @@ void keyboard(unsigned char key, int x, int y)
 	case 119: //w key
 		if(speed <= 1.0f)
 			speed += .01f;
-		/*position -= direction; //Moved to display, modified here
-		angle2 += .2;*/
 		break;
 	case 97: //a key
-		//position += x1;
 		angle += 10;
 		break;
 	case 115: //s key
 		if (speed >= -1.0f)
 			speed -= .01f;
-		/*position += direction;
-		angle2 += .2;*/
 		break;
 	case 100: //d key
-		//position -= x1;
 		angle -= 10;
 		break;
 	case 32: //space bar
@@ -187,10 +207,11 @@ void keyboard(unsigned char key, int x, int y)
 			speed = 0.0f;
 		break;
 	case 99: //c key
-		if (firstPerson == 1)
-			firstPerson = 0;
-		else
-			firstPerson = 1;
+		cameraMode++;
+
+		if (cameraMode == 4)
+			cameraMode = 0;
+
 		break;
 	case 102: //f key
 		//forward camera
@@ -236,7 +257,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE| GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize (800, 600); 
+	glutInitWindowSize (1080, 720); 
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow (argv[0]);
 	glewInit();
@@ -249,16 +270,15 @@ int main(int argc, char** argv)
 	glutSpecialFunc(specialKeys);
 	glEnable(GL_DEPTH_TEST);
 
+
+
 	
-	//body = new Model(&shader, "models/cylinder.obj");
-	body = new Model(&shader, "models/dodge-challenger_model.obj", "models/");
+	car = new Model(&shader, "models/dodge-challenger_model.obj", "models/");
+	//sphere = new Mesh("models/sphere.obj", &shaderSL);
 	plane = new Model(&shader, "models/plane.obj");
-	//sphere = new Model(&shader, "models/dodge-challenger_model.obj", "models/"); // you must specify the material path for this to load
-	//lArm = new Model(&shader, "models/cylinder.obj");
-	//rArm = new Model(&shader, "models/cylinder.obj");
-	//lLeg = new Model(&shader, "models/cylinder.obj");
-	//rLeg = new Model(&shader, "models/cylinder.obj");
-	//head = new Model(&shader, "models/cylinder.obj");
+	street = new Model(&shader, "models/street_str.obj", "models/");
+	lamp = new Model(&shader, "models/street lamp.obj", "models/");
+	cone = new Model(&shader, "models/road_cone_obj.obj");
 	
 
 	glutMainLoop();
