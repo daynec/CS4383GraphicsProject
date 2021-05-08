@@ -1,4 +1,0 @@
-﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  main.cpp
-main.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  TestGLProj.vcxproj -> D:\School\Current Sem\Computer Graphics\GP\CS4383GraphicsProject-main\CS4383GraphicsProject-main\Debug\RacingGame.exe
