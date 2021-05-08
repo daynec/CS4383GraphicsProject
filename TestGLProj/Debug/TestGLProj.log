@@ -1,2 +1,0 @@
-﻿main.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  TestGLProj.vcxproj -> C:\Users\silverhog\Documents\GitHub\CS4383GraphicsProject\Debug\RacingGame.exe
