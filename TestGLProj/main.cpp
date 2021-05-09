@@ -113,19 +113,19 @@ void display(void)
 	model = glm::translate(position) * glm::rotate(angle, 0.0f, 1.0f, 0.0f); //Car Body Model
 	generateCarBox();
 	direction = glm::normalize(glm::vec3(sin(angle * (M_PI / 180)), 0, cos(angle * (M_PI / 180))));
-	if (cameraMode == 0) {
+	if (cameraMode == 0) { //Free-look
 		camDir = glm::normalize(glm::vec3(
 			cos(glm::radians(camAngle)) * cos(glm::radians(camPitch)),	//X
 			sin(glm::radians(camPitch)),								//Y
 			sin(glm::radians(camAngle)) * cos(glm::radians(camPitch))));//Z
 		view = glm::lookAt(camPos, camPos+camDir, glm::vec3(0.0f, 1.0f, 0.0f));
 	} 
-	else if(cameraMode == 1)
-		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 1.0f), position+(-direction)+glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));//camera render location
-	else if(cameraMode == 2)
+	else if(cameraMode == 1) //First Person
+		view = glm::lookAt(position + direction + glm::vec3(0.0f, 1.0f, 0.0f), position+ (-direction)+glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));//camera render location
+	else if(cameraMode == 2) //Top Down
 		view = glm::lookAt(position + glm::vec3(0.0f, 20.0f, 0.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	else if(cameraMode == 3)
-		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 5.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	else if(cameraMode == 3) //Third Person
+		view = glm::lookAt(position + direction + direction + direction + direction + direction + glm::vec3(0.0f, 2.0f, 0.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	car->render(view *model * glm::scale(1.0f, 1.0f, 1.0f) * glm::translate(0.0f,0.0f,1.0f), projection); // Render car
 	//plane->render(view * glm::translate(0.0f,0.0f,-175.0f)*glm::scale(10.0f,1.0f,180.0f), projection);
