@@ -379,14 +379,14 @@ void keyboard(unsigned char key, int x, int y)
 			speed += ACCELERATION;
 		break;
 	case 97: //a key
-		angle += 10;
+		angle2 += TURN_SPEED;
 		break;
 	case 115: //s key
 		if (speed >= -MAX_SPEED)
 			speed -= ACCELERATION;
 		break;
 	case 100: //d key
-		angle -= 10;
+		angle2 -= TURN_SPEED;
 		break;
 	case 32: //space bar
 		if (speed >= HANDBREAK_STRENGTH || speed <= -HANDBREAK_STRENGTH) {
