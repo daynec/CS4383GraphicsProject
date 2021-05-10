@@ -1,0 +1,433 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 21.01.2020 20:17:21
+
+newmtl badge
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_d E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage_a.png
+
+newmtl black
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl black_glass
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl body
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl chrome
+	Ns 66.4386
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl emblem
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl frame
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Ks E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+
+newmtl matte_colors
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+
+newmtl plastic2
+	Ns 51.2928
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl rubber_trim
+	Ns 46.4386
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl textured_reflector
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl bottom
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+
+newmtl detail_glass_amber
+	Ns 20.0000
+	Ni 1.5000
+	d 0.9200
+	Tr 0.0800
+	Tf 0.9200 0.9200 0.9200 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 0.5000 0.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl detail_glass_clear
+	Ns 20.0000
+	Ni 1.5000
+	d 0.9200
+	Tr 0.0800
+	Tf 0.9200 0.9200 0.9200 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl bumper_frame
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\bumper_frame.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\bumper_frame.png
+
+newmtl detail_glass_red
+	Ns 20.0000
+	Ni 1.5000
+	d 0.9200
+	Tr 0.0800
+	Tf 0.9200 0.9200 0.9200 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 0.5000 0.5000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl misc
+	Ns 66.4386
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl window
+	Ns 20.0000
+	Ni 1.5000
+	d 0.7000
+	Tr 0.3000
+	Tf 0.7000 0.7000 0.7000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl glass
+	Ns 20.0000
+	Ni 1.5000
+	d 0.4000
+	Tr 0.6000
+	Tf 0.4000 0.4000 0.4000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl head_light
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl grille1
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\grille1.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\grille1.png
+	map_d E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\grille1_a.png
+
+newmtl interior
+	Ns 25.8496
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+
+newmtl lights_glass
+	Ns 20.0000
+	Ni 1.5000
+	d 0.9200
+	Tr 0.0800
+	Tf 0.9200 0.9200 0.9200 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl reverse_light
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl tail_light
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\lights.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\skyxn.png
+
+newmtl undercarriage
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\undercarriage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\undercarriage.png
+	map_Ks E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\undercarriage.png
+
+newmtl body_2
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\nodamage.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl inner_rim
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\wheel.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\wheel.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png
+
+newmtl tire
+	Ns 20.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\tireA0.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\tireA0.png
+
+newmtl rim
+	Ns 56.4386
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.4000 0.4000 0.4000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\wheel.png
+	map_Kd E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\wheel.png
+	map_refl E:\2011 BCWipe 500_1\????? ?????\1994 Mazda MX-5 Miata\darkrefl.png

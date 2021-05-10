@@ -98,7 +98,6 @@ void display(void)
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Shader init
-	/*
 	glm::vec4 lightPos = lightPosition;
 
 	shader.Activate(); // Bind shader.
@@ -107,7 +106,6 @@ void display(void)
 	shader.SetUniform("lightSpecular", glm::vec4(1.0, 1.0, 1.0, 1.0));
 	shader.SetUniform("lightAmbient", glm::vec4(1.0, 1.0, 1.0, 1.0));
 	shader.SetUniform("linearAttenuationCoefficient", .3f);
-	*/
 
 	// camera positioned at 20 on the z axis, looking into the screen down the -Z axis.
 	model = glm::translate(position) * glm::rotate(angle, 0.0f, 1.0f, 0.0f); //Body Model
@@ -170,7 +168,7 @@ void keyboard(unsigned char key, int x, int y)
 	case 115: //s key
 		if (speed >= 0.0f)
 		{
-			speed -= .03f;
+			speed -= .02f;
 		}
 		else if (speed >= -1.0f)
 		{
@@ -205,8 +203,6 @@ void keyboard(unsigned char key, int x, int y)
 	case 118: //v key
 		//backward camera
 		camPos -= camDir;
-		break;
-	default:
 		break;
 	}
 }
@@ -258,8 +254,8 @@ int main(int argc, char** argv)
 	glEnable(GL_DEPTH_TEST);
 
 	
-	car = new Model(&shader, "models/dodge-challenger_model.obj", "models/");
-	//car = new Model(&shader, "models/miata95.obj", "models/");
+	//car = new Model(&shader, "models/dodge-challenger_model.obj", "models/");
+	car = new Model(&shader, "models/miata95.obj", "models/");
 	plane = new Model(&shader, "models/plane.obj");
 	cone = new Model(&shader, "models/road_cone_obj.obj");
 	
