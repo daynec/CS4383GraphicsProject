@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
+#include <GL/glut.h>
 
 //glm library
 #include <glm/glm.hpp>
@@ -10,31 +11,42 @@
 
 #include "Model.h"
 #include "Shader.h"
+#include "Shader3.h"
+#include "Mesh.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #define M_PI 3.1415926535897932384626433832795
 
+void collisionDetectionSphere(glm::vec3 pos, float radius);
+void collisionResolutionSphere();
+void generateCarBox();
+bool roadCheck(glm::vec3 roadPos, float roadXWidth, float roadYHeight, float roadZLength);
+
 Shader shader; // loads our vertex and fragment shaders
+//Shader3 shaderSL; // loads our vertex and fragment shaders
 Model *car; //a car 
-Model *cone; //a cone 
-Model *plane; //a plane
-//Model *lArm; //a left arm // TODO: Convert to Wheels
-//Model *rArm; //a right arm
-//Model *lLeg; //a left leg
-//Model *rLeg; //a right leg
+Mesh* sphere; //a light??? 
+Model* cone; //a traffic-cone 
+Model* plane; //a plane (depreciated)
+Model* street; //a street-segment
+Model* lamp; //a lamp-post
+Model *streetTurn; //a street
 glm::mat4 projection; // projection matrix
 glm::mat4 view; // where the camera is looking
 glm::mat4 model; // Main-Body Model
-//glm::mat4 modelLArm; //Left Arm swing model // TODO: Convert to Wheels
-//glm::mat4 modelRArm; //Right Arm swing model
-//glm::mat4 modelLLeg; //Left Leg swing model
-//glm::mat4 modelRLeg; //Right Leg swing model
+glm::vec3 carBoxMinXYZ; //Contains the minimum x, y, and z values for the car's top-down 2D bounding box.
+glm::vec3 carBoxMaxXYZ; //Contains the maximum x, y, and z values for the car's top-down 2D bounding box.
 float angle = 0;
 float angle2 = 0;
 glm::vec3 position = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 positionStrT = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 positionStr[25] = {glm::vec3(-3.0f, 0.0f, 0.0f)};
+glm::vec3 positionStrX[25] = {glm::vec3(-3.0f, 0.0f, 0.0f)};
 glm::vec3 direction;
+glm::vec3 center;
+glm::vec3 move;
 int cameraMode = 1; //1 is first person, 0 is free-look, 2 is top down, 3 is thrid person
 glm::vec3 camPos = glm::vec3(0.0f, 5.0f, -5.0f);
 glm::vec3 camDir = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -42,7 +54,19 @@ float camAngle;
 float camPitch = 0.0f;
 float speed = 0.0f;
 
-glm::vec4 lightPosition = glm::vec4(0.0f, 0.0f, 3.0f, 1.0f);
+int onRoad = 0; //Increments if the car is currently on a road. Total is the number of road tiles the car is concurrently on.
+int isGravity = 1; //1 for gravity to be turned on, 0 for gravity to be turned off (such as when currently driving on the road)
+
+const float CAR_COLLIDER_RADIUS = 1.0f; //The radius of the car's collider sphere for obstacle collision.
+const float GRAVITY_SPEED = 0.02f; // Speed at which the car will fall when not on the road.
+const float MAX_SPEED = 1.0f; //Maxiumum speed multiploer the car can reach.
+const float ACCELERATION = 0.01f; //Change in speed when w or s are held
+const float HANDBREAK_STRENGTH = 0.1f; //Change in speed when Spacebar is held
+const float TURN_SPEED = 10; // Angle the car will turn each press of s or d
+
+float rotation = 0.0f;
+glm::vec4 lightPosition = glm::vec4(0.0f, 3.0f, 0.0f, 1.0f);
+bool turnR, turnL, turningL, turningR = false;
 
 /* report GL errors, if any, to stderr */
 void checkError(const char *functionName)
@@ -56,6 +80,7 @@ void checkError(const char *functionName)
 void initShader(void)
 {
 	shader.InitializeFromFile("shaders/phong.vert", "shaders/phong.frag");
+	//shaderSL.InitializeFromFile("shaders/phong.vert", "shaders/phong3.frag");
 	shader.AddAttribute("vertexPosition");
 	shader.AddAttribute("vertexNormal");
 
@@ -94,49 +119,238 @@ void dumpInfo(void)
 /*This gets called when the OpenGL is asked to display. This is where all the main rendering calls go*/
 void display(void)
 {
-	//glm::rot
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//Shader init
-	/*
-	glm::vec4 lightPos = lightPosition;
-
-	shader.Activate(); // Bind shader.
-	shader.SetUniform("lightPosition", view * lightPos);
-	shader.SetUniform("lightDiffuse", glm::vec4(1.0, 1.0, 1.0, 1.0));
-	shader.SetUniform("lightSpecular", glm::vec4(1.0, 1.0, 1.0, 1.0));
-	shader.SetUniform("lightAmbient", glm::vec4(1.0, 1.0, 1.0, 1.0));
-	shader.SetUniform("linearAttenuationCoefficient", .3f);
-	*/
-
 	// camera positioned at 20 on the z axis, looking into the screen down the -Z axis.
-	model = glm::translate(position) * glm::rotate(angle, 0.0f, 1.0f, 0.0f); //Body Model
+	if (speed == 0)
+		model = glm::translate(position) * glm::rotate(angle, 0.0f, 1.0f, 0.0f); //Body Model
+	else{
+		if (angle != angle2) {
+			if (angle > angle2)
+				model = glm::translate(position) * glm::rotate(angle -= 1, 0.0f, 1.0f, 0.0f);
+			if (angle < angle2)
+				model = glm::translate(position) * glm::rotate(angle += 1, 0.0f, 1.0f, 0.0f);
+		}
+		else
+			model = glm::translate(position)* glm::rotate(angle2, 0.0f, 1.0f, 0.0f);
+	}
+
+	generateCarBox();
 	direction = glm::normalize(glm::vec3(sin(angle * (M_PI / 180)), 0, cos(angle * (M_PI / 180))));
-	if (cameraMode == 0) {
+	if (cameraMode == 0) { //Free-look
 		camDir = glm::normalize(glm::vec3(
 			cos(glm::radians(camAngle)) * cos(glm::radians(camPitch)),	//X
 			sin(glm::radians(camPitch)),								//Y
 			sin(glm::radians(camAngle)) * cos(glm::radians(camPitch))));//Z
-		view = glm::lookAt(camPos, camPos+camDir, glm::vec3(0.0f, 1.0f, 0.0f));
-	} 
-	else if(cameraMode == 1)
-		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 0.0f), position+(-direction)+glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));//camera render location
-	else if(cameraMode == 2)
+		view = glm::lookAt(camPos, camPos + camDir, glm::vec3(0.0f, 1.0f, 0.0f));
+	}
+	else if (cameraMode == 1) //First Person
+		view = glm::lookAt(position + direction + glm::vec3(0.0f, 1.0f, 0.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));//camera render location
+	else if (cameraMode == 2) //Top Down
 		view = glm::lookAt(position + glm::vec3(0.0f, 20.0f, 0.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	else if (cameraMode == 3)
-		view = glm::lookAt(position + glm::vec3(0.0f, 1.0f, 5.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	else if (cameraMode == 3) //Third Person
+		view = glm::lookAt(position + direction + direction + direction + direction + direction + glm::vec3(0.0f, 2.0f, 0.0f), position + (-direction) + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	car->render(view *model * glm::scale(1.0f, 1.0f, 1.0f) * glm::translate(0.0f,0.0f,0.0f), projection); // Render current active model.
-	plane->render(view * glm::translate(0.0f,0.0f,-175.0f)*glm::scale(10.0f,1.0f,180.0f), projection);
-	for (int i = 0; i < 350; i += 5) {
-		cone->render(view * glm::translate(5.0f, 0.0f, 0.0f - i) * glm::scale(0.01f, 0.01f, 0.01f), projection);
-		cone->render(view * glm::translate(-5.0f, 0.0f, 0.0f - i) * glm::scale(0.01f, 0.01f, 0.01f), projection);
+	car->render(view * model * glm::translate(0.0f,0.0f,1.0f), projection); // Render current active model.
+
+	onRoad = 0;
+	for (int i = 0; i < (sizeof(positionStr) / sizeof(positionStr[0])); i++) {
+		if ((positionStr[i].z - position.z) >= 240 && turnL == false && turnR == false) {
+			turningL = false;
+			turningR = false;
+			positionStr[i].z = positionStr[i].z - 500.0f;
+			srand((unsigned int)time(NULL));
+			int tVal = rand() % 100 + 1;
+			//printf("TVal %d\n", tVal);
+			if (tVal > 90) {
+				positionStrT = positionStr[i];
+				positionStrT.z = positionStrT.z - 20.0f;
+				if (turnL == false && turnR == false) {
+					//srand((unsigned int)time(NULL));
+					int rVal = rand() % 100 + 1;
+					//printf("RVal %d\n", rVal);
+					if (rVal > 50) {
+						turnR = true;
+						for (int i = 0; i < (sizeof(positionStr) / sizeof(positionStr[0])); i++) {
+							positionStrX[i] = glm::vec3(17.0f + (i * 20) + positionStrT.x, 0.0f, positionStrT.z);
+						}
+					}
+					else {
+						turnL = true;
+						for (int i = 0; i < (sizeof(positionStr) / sizeof(positionStr[0])); i++) {
+							positionStrX[i] = glm::vec3(-23.0f - (i * 20) + positionStrT.x, 0.0f, positionStrT.z);
+						}
+					}
+				}
+			}
+			//printf("HERES\n");
+		}
+		if (turnL == true) {
+			if ((positionStrX[i].x - position.x) >= 240) {
+				positionStrX[i].x = positionStrX[i].x - 500.0f;
+				//srand((unsigned int)time(NULL));
+				int tVal2 = rand() % 100 + 1;
+				//printf("TVal %d\n", tVal);
+				if (tVal2 > 80) {
+					turnL = false;
+					turningL = true;
+					//printf("HERE\n");
+					
+					positionStrT = positionStrX[i];
+					positionStrT.x = positionStrT.x - 20.0f;
+					//positionStrT.z = positionStrT.z - 20.0f;
+					positionStr->x = positionStrT.x;
+					for (int i = 0; i < (sizeof(positionStr) / sizeof(positionStr[0])); i++) {
+						positionStr[i] = glm::vec3(positionStrT.x, 0.0f, positionStrT.z - 20.0f - (i * 20));
+					}
+				}
+			}
+			//turnleft
+			streetTurn->render(view * glm::translate(positionStrT) * glm::rotate(180.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+			street->render(view * glm::translate(positionStrX[i]) * glm::rotate(90.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+			if (roadCheck(positionStrX[i], 19.0f, 0.5f, 19.0f)) { //These road-values besides position are approximations due to lack of exact measurements.
+				onRoad++;
+			}
+		}
+		if (turnR == true) {
+			if ((position.x - positionStrX[i].x) >= 240) {
+				//printf("HERE\n");
+				positionStrX[i].x = positionStrX[i].x + 500.0f;
+				//srand((unsigned int)time(NULL));
+				int tVal2 = rand() % 100 + 1;
+				//printf("TVal %d\n", tVal);
+				if (tVal2 > 80) {
+					turnR = false;
+					turningR = true;
+					//printf("HERE\n");
+
+					positionStrT = positionStrX[i];
+					positionStrT.x = positionStrT.x + 20.0f;
+					//positionStrT.z = positionStrT.z - 20.0f;
+					positionStr->x = positionStrT.x;
+					for (int i = 0; i < (sizeof(positionStr) / sizeof(positionStr[0])); i++) {
+						positionStr[i] = glm::vec3(positionStrT.x, 0.0f, positionStrT.z - 20.0f - (i * 20));
+					}
+				}
+			}
+			//printf("HERER\n");
+			//turn right
+			streetTurn->render(view * glm::translate(positionStrT) * glm::rotate(270.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+			street->render(view * glm::translate(positionStrX[i]) * glm::rotate(90.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+			if (roadCheck(positionStrX[i], 19.0f, 0.5f, 19.0f)) { //These road-values besides position are approximations due to lack of exact measurements.
+				onRoad++;
+			}
+		}
+		if ((positionStr[i].z - position.z) < 240 && turningL == true) {
+			streetTurn->render(view * glm::translate(positionStrT) * glm::rotate(0.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+			street->render(view * glm::translate(positionStrX[i]) * glm::rotate(90.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+			if (roadCheck(positionStrX[i], 19.0f, 0.5f, 19.0f)) { //These road-values besides position are approximations due to lack of exact measurements.
+				onRoad++;
+			}
+		}
+		if ((positionStr[i].z - position.z) < 240 && turningR == true) {
+			//turn right
+			streetTurn->render(view* glm::translate(positionStrT)* glm::rotate(-270.0f, 0.0f, 1.0f, 0.0f)* glm::scale(2.0f, 2.0f, 2.0f), projection);
+			street->render(view* glm::translate(positionStrX[i])* glm::rotate(90.0f, 0.0f, 1.0f, 0.0f)* glm::scale(2.0f, 2.0f, 2.0f), projection);
+			if (roadCheck(positionStrX[i], 19.0f, 0.5f, 19.0f)) { //These road-values besides position are approximations due to lack of exact measurements.
+				onRoad++;
+			}
+		}
+
+		street->render(view * glm::translate(positionStr[i]) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+		if (roadCheck(positionStr[i], 19.0f, 0.5f, 19.0f)) { //These road-values besides position are approximations due to lack of exact measurements.
+			onRoad++;
+		}
 	}
 	
-	position -= direction * speed;
+	for (int i = 0; i < 350; i += 20) {
+		//Add lamps on Right hand side
+		lamp->render(view * glm::translate(5.0f, 0.0f, 0.0f - i) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+		//Test collision
+		collisionDetectionSphere(glm::vec3(5.0f, 0.0f, 0.0f - i), .7f);
+		// TODO: Better establish the base of the lamp's coordinates so that the collision spheres are exactly at 
+		// the base of the lamp so you don't collide in the space underneath the light which is techinally the middle of the lamp model.
+		//Add lamps on Left hand side
+		lamp->render(view * glm::translate(-12.0f, 0.0f, 0.0f - i) * glm::rotate(180.0f, 0.0f, 1.0f, 0.0f) * glm::scale(2.0f, 2.0f, 2.0f), projection);
+		//Test collision
+		collisionDetectionSphere(glm::vec3(-12.0f, 0.0f, 0.0f - i), .7f);
+		// TODO: Better establish the base of the lamp's coordinates so that the collision spheres are exactly at 
+		// the base of the lamp so you don't collide in the space underneath the light which is techinally the middle of the lamp model.
+	}
+	
+	
+	position -= (direction * speed) + glm::vec3(0.0f, isGravity * GRAVITY_SPEED, 0.0f); //Now includes gravity Effects
 	
 	glutSwapBuffers(); // Swap the buffers.
 	checkError ("display");
+}
+
+/*Put in the location and radius for the collision sphere of the object for the car to test against. If a collision is detected collisionResolution is automatically called.*/
+void collisionDetectionSphere(glm::vec3 pos, float radius) {
+	if (glm::distance(position, pos) < CAR_COLLIDER_RADIUS + radius) {
+		collisionResolutionSphere();
+	}
+}
+
+/*Automatically called if collisionDetection detects the car's collision sphere has entered another collision sphere.*/
+void collisionResolutionSphere() {
+	if (speed != 0) {
+		printf("Hit something. ");
+		//Sets speed to 0 after negating the movement that lead to being stuck to ensure they remain where they were last safe instead of just slamming into the wall immediately again.
+		//TODO: Richochet collision, is that's something we wish to do.
+		position -= direction * -speed;
+		speed = 0;
+		//TODO: Add a visual, maybe a flash of light or a color change to show what was collided, or a sound, like a metal smash noise. Not essential, but would be a better indicator.
+	}
+	else {
+		//TODO: Make error message for when what was once safe a frame ago is no longer safe since that is where they should be safe.
+		//TODO: Reset the car either to the start or back into the middle of the road.
+	}
+}
+
+/*Regenerates the cars simple bounding box based on it's current position and the radius of the sphere-collider used for object collision*/
+void generateCarBox() {
+	//Approxiamtion due to lack of car-measurements
+	carBoxMaxXYZ = glm::vec3(position.x + CAR_COLLIDER_RADIUS, position.y + 1.0f, position.z + CAR_COLLIDER_RADIUS);
+	carBoxMinXYZ = glm::vec3(position.x - CAR_COLLIDER_RADIUS, position.y, position.z - CAR_COLLIDER_RADIUS);
+}
+
+/*Will return false if the car is not currently on the road, true if the car is currently colliding on the road.*/
+bool roadCheck(glm::vec3 roadPos, float roadXWidth, float roadYHeight, float roadZLength) {
+	//Generate Road bounding values, 
+	glm::vec3 roadMaxXYZ(roadPos.x + (roadXWidth / 2), roadPos.y + roadYHeight, roadPos.z + (roadZLength / 2));//The coordinate that contains the Max X and Max Z of this road tile.
+	glm::vec3 roadMinXYZ(roadPos.x - (roadXWidth / 2), roadPos.y, roadPos.z - (roadZLength / 2));//The coordinate that contains the Min X and Min Z of this road tile.
+	//Test corners for inclusion in box
+	if ((carBoxMaxXYZ.x <= roadMaxXYZ.x && carBoxMaxXYZ.x >= roadMinXYZ.x //If car's max X is within road box
+		||															//Or
+		carBoxMinXYZ.x <= roadMaxXYZ.x && carBoxMinXYZ.x >= roadMinXYZ.x) //If car's min X is within road box
+		&&																//AND
+		(carBoxMaxXYZ.z <= roadMaxXYZ.z && carBoxMaxXYZ.z >= roadMinXYZ.z //If car's max Z is within road box
+			||															//Or
+			carBoxMinXYZ.z <= roadMaxXYZ.z && carBoxMinXYZ.z >= roadMinXYZ.z))//If car's min Z is within road box
+	{
+		if (carBoxMinXYZ.y == roadMaxXYZ.y) { //On the road face still
+			return true;//Gravity Off (driving on road)
+		}
+		if (carBoxMinXYZ.y > roadMaxXYZ.y || carBoxMaxXYZ.y < roadMinXYZ.y) { //If the car is above the road-box or under the roadbox
+			return false;//Gravity On (not colliding with road)
+		}
+		if (carBoxMinXYZ.y > roadMinXYZ.y && carBoxMinXYZ.y < roadMaxXYZ.y) { //If bottom of car is colliding with the road
+			position += glm::vec3(0.0f, roadMaxXYZ.y - carBoxMinXYZ.y, 0.0f);
+			return true;//Gravity Off (collision with road resolved, now driving on road)
+		}
+		if (carBoxMaxXYZ.y > roadMinXYZ.y && carBoxMaxXYZ.y < roadMaxXYZ.y) {//Checking if top of car is colliding with road
+			//Since the last if statement would have returned if true this means the car is bumping into the bottom of the road so we will push it beneath the road
+			position -= glm::vec3(0.0f, carBoxMaxXYZ.y - roadMinXYZ.y, 0.0f);
+			return false;//Gravity On (collision with road resolved, not driving on the road)
+		}
+		printf("ERROR: This is not supposed to be reachable. \n roadCheck unresolved case. \n carBoxMaxXYZ.y = %f \n carBoxMinXYZ.y = %f \n roadBoxMaxXYZ.y = %f \n roadBoxMinXYZ.y = %f",
+			carBoxMaxXYZ.y, carBoxMinXYZ.y, roadMaxXYZ.y, roadMinXYZ.y);
+		return true; //Shouldn't be reachable but if it is the error message above will print diagnostics.
+	}
+	else {
+		return false; //If no corner is within the road's box
+	}
 }
 
 /*This gets called when nothing is happening (OFTEN)*/
@@ -161,32 +375,25 @@ void keyboard(unsigned char key, int x, int y)
 		exit(0);
 		break;
 	case 119: //w key
-		if(speed <= 1.0f)
-			speed += .01f;
+		if (speed <= MAX_SPEED)
+			speed += ACCELERATION;
 		break;
 	case 97: //a key
-		angle += 10;
+		angle2 += TURN_SPEED;
 		break;
 	case 115: //s key
-		if (speed >= 0.0f)
-		{
-			speed -= .03f;
-		}
-		else if (speed >= -1.0f)
-		{
-			speed -= .01f;
-		}
-			
+		if (speed >= -MAX_SPEED)
+			speed -= ACCELERATION;
 		break;
 	case 100: //d key
-		angle -= 10;
+		angle2 -= TURN_SPEED;
 		break;
 	case 32: //space bar
-		if (speed >= 0.1f || speed <= -0.1f) {
-			if (speed >= 0.1f)
-				speed -= 0.1f;
-			if (speed <= -0.1f)
-				speed += 0.1f;
+		if (speed >= HANDBREAK_STRENGTH || speed <= -HANDBREAK_STRENGTH) {
+			if (speed >= HANDBREAK_STRENGTH)
+				speed -= HANDBREAK_STRENGTH;
+			if (speed <= -HANDBREAK_STRENGTH)
+				speed += HANDBREAK_STRENGTH;
 		}
 		else
 			speed = 0.0f;
@@ -205,8 +412,6 @@ void keyboard(unsigned char key, int x, int y)
 	case 118: //v key
 		//backward camera
 		camPos -= camDir;
-		break;
-	default:
 		break;
 	}
 }
@@ -244,7 +449,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE| GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize (800, 600); 
+	glutInitWindowSize (1080, 720); 
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow (argv[0]);
 	glewInit();
@@ -257,10 +462,20 @@ int main(int argc, char** argv)
 	glutSpecialFunc(specialKeys);
 	glEnable(GL_DEPTH_TEST);
 
+	for (int i = 0; i < (sizeof(positionStr) / sizeof(positionStr[0])); i++) {
+		positionStr[i] = glm::vec3(-3.0f, 0.0f, -(i*20));
+		//positionStrX[i] = glm::vec3(-3.0f-(i*20), 0.0f, 0.0f);
+
+	}
+
+
 	
 	car = new Model(&shader, "models/dodge-challenger_model.obj", "models/");
-	//car = new Model(&shader, "models/miata95.obj", "models/");
+	//sphere = new Mesh("models/sphere.obj", &shaderSL);
 	plane = new Model(&shader, "models/plane.obj");
+	street = new Model(&shader, "models/street_str.obj", "models/");
+	streetTurn = new Model(&shader, "models/street_turn.obj", "models/");
+	lamp = new Model(&shader, "models/street lamp.obj", "models/");
 	cone = new Model(&shader, "models/road_cone_obj.obj");
 	
 
